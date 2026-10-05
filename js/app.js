@@ -53,7 +53,7 @@
   /* ---------- окна ---------- */
   var modal = $('#modal'), mBody = $('#mBody'), lastFocus = null;
   function openModal(html, cls, origin) {
-    lastFocus = document.activeElement; mBody.innerHTML = html; modal.className = 'modal open' + (cls ? ' ' + cls : ''); modal.setAttribute('aria-hidden', 'false');
+    lastFocus = document.activeElement; mBody.innerHTML = html; $('#mBox').scrollTop = 0; modal.className = 'modal open' + (cls ? ' ' + cls : ''); modal.setAttribute('aria-hidden', 'false');
     var b = $('#mBox'); if (origin) { var r = origin.getBoundingClientRect(); b.style.setProperty('--ox', Math.round(r.left + r.width / 2 - innerWidth / 2) + 'px'); b.style.setProperty('--oy', Math.round(r.top + r.height / 2 - innerHeight / 2) + 'px'); } else { b.style.setProperty('--ox', '0px'); b.style.setProperty('--oy', '0px'); }
     if (window.FX && FX.lock) FX.lock(true); $('.m-x', modal).focus({ preventScroll: true });
   }
