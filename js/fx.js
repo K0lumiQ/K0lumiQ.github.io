@@ -168,7 +168,7 @@
       setTimeout(function () { modal.classList.remove('flip'); $$('.proj-img').forEach(function (x) { x.style.visibility = ''; }); }, 900);
     }
   }
-  if (modal) new MutationObserver(onModal).observe(modal, { attributes: true, attributeFilter: ['class'] });
+  // FLIP-переход отключён: картинка искажалась при смене пропорций; окно растёт из карточки через --ox/--oy (app.js)
 
   /* ---------- API ---------- */
   function refresh() { observeAll(); para = $$('[data-par]'); para.forEach(function (p) { if (!p.dataset.pobs) { p.dataset.pobs = '1'; pio.observe(p); } }); }
