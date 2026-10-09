@@ -60,8 +60,8 @@
   /* ---------- шапка, прогресс, индикатор меню ---------- */
   var hdr = $('#hdr'), prog = $('#progress i'), links = $$('#nav a[data-nav]'), ind = $('#navInd'), lastY = 0, activeId = 'top', nav = $('#nav');
   function moveInd(a) { if (!ind) return; if (!a || a.classList.contains('pill')) { ind.style.width = '0px'; return; } ind.style.width = (a.offsetWidth - 44) + 'px'; ind.style.transform = 'translateX(' + (a.offsetLeft + 22) + 'px)'; }
-  var secs = ['top', 'about', 'services', 'works', 'process', 'contact'].map(function (id) { return document.getElementById(id); }).filter(Boolean);
-  function setActive(id) { if (id === 'process') id = 'works'; if (id === activeId) return; activeId = id; var a = null; links.forEach(function (l) { var on = l.dataset.nav === id; l.classList.toggle('on', on); if (on) a = l; }); moveInd(a); }
+  var secs = ['top', 'about', 'services', 'case', 'time', 'process', 'contact', 'works'].map(function (id) { return document.getElementById(id); }).filter(Boolean);
+  function setActive(id) { if (id === 'time') id = 'case'; if (id === 'works') id = 'sites'; if (id === activeId) return; activeId = id; var a = null; links.forEach(function (l) { var on = l.dataset.nav === id; l.classList.toggle('on', on); if (on) a = l; }); moveInd(a); }
   var sio = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) setActive(e.target.id); }); }, { rootMargin: '-45% 0px -50% 0px' });
   secs.forEach(function (s) { sio.observe(s); }); setTimeout(function () { moveInd($('#nav a.on')); }, 250);
   window.addEventListener('resize', function () { moveInd($('#nav a.on')); });

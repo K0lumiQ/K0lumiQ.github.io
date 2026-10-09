@@ -9,8 +9,8 @@
   var refresh = function () { if (window.FX && FX.refresh) FX.refresh(); };
 
   /* ---------- контакты ---------- */
-  $('#tgBtn').href = ME.telegramUrl; $('#ghBtn').href = ME.githubUrl;
-  $('.mail-t').textContent = ME.email; $('#mail').href = 'mailto:' + ME.email;
+  var tgb = $('#tgBtn'); if (tgb) tgb.href = ME.telegramUrl;
+  var mailEl = $('#mail'); if (mailEl) { $('.mail-t').textContent = ME.email; mailEl.href = 'mailto:' + ME.email; }
   var fm = $('#fMail'); fm.textContent = ME.email; fm.href = 'mailto:' + ME.email;
   var ft = $('#fTg'); ft.textContent = ME.telegram; ft.href = ME.telegramUrl;
   var ICON = {
@@ -21,15 +21,27 @@
   $('#soc').innerHTML = '<a href="' + ME.telegramUrl + '" target="_blank" rel="noopener" aria-label="Telegram">' + ICON.tg + '</a><a href="' + ME.githubUrl + '" target="_blank" rel="noopener" aria-label="GitHub">' + ICON.gh + '</a><a href="mailto:' + ME.email + '" aria-label="Почта">' + ICON.mail + '</a>';
 
   /* ---------- статистика, услуги, процесс, цитата ---------- */
-  $('#stats').innerHTML = STATS.map(function (s) { return '<div class="stat" data-fade><b class="num" data-count="' + s.n + '">0</b>' + (s.plus ? '<i>+</i>' : '') + '<span>' + s.label + '</span></div>'; }).join('');
-  $('#svcGrid').innerHTML = SERVICES.map(function (s, i) {
+  function put(sel, fn) { var el = $(sel); if (el) fn(el); }
+  put('#stats', function (el) { el.innerHTML = STATS.map(function (s) { return '<div class="stat" data-fade><b class="num" data-count="' + s.n + '">0</b>' + (s.plus ? '<i>+</i>' : '') + '<span>' + s.label + '</span></div>'; }).join(''); });
+  put('#svcGrid', function (el) { el.innerHTML = SERVICES.map(function (s, i) {
     return '<article class="svc" data-card data-tilt style="--i:' + i + '"><span class="svc-n">' + s.n + '</span><h3>' + s.title + '</h3><p>' + s.text + '</p><div class="tags">' + s.tags.map(function (t) { return '<span>' + t + '</span>'; }).join('') + '</div><i class="svc-glow"></i></article>';
-  }).join('');
-  $('#stepGrid').innerHTML = STEPS.map(function (s, i) { return '<article class="step" data-card style="--i:' + i + '"><span class="step-n">' + s.n + '</span><h3>' + s.title + '</h3><p>' + s.text + '</p></article>'; }).join('');
-  $('#quote blockquote').textContent = QUOTE.text; $('#quote figcaption').innerHTML = '<b>' + QUOTE.author + '</b><span>' + QUOTE.role + '</span>';
+  }).join(''); });
+  put('#stepGrid', function (el) { el.innerHTML = STEPS.map(function (s, i) { return '<article class="step" data-card style="--i:' + i + '"><span class="step-n">' + s.n + '</span><h3>' + s.title + '</h3><p>' + s.text + '</p></article>'; }).join(''); });
+  put('#quote', function (el) { $('blockquote', el).textContent = QUOTE.text; $('figcaption', el).innerHTML = '<b>' + QUOTE.author + '</b><span>' + QUOTE.role + '</span>'; });
+  put('#csBox', function (el) {
+    var li = function (a) { return a.map(function (x) { return '<li>' + x + '</li>'; }).join(''); };
+    el.innerHTML = '<span class="badge">' + CASE.tag + '</span><h3>' + CASE.title + '</h3><div class="cs-cols"><div class="cs-col was" data-card><h4>Было</h4><ul>' + li(CASE.was) + '</ul></div><div class="cs-col now" data-card><h4>Стало</h4><ul>' + li(CASE.now) + '</ul></div></div><p class="cs-line" data-fade>' + CASE.line + '</p>';
+  });
+  put('#csBox2', function (el) {
+    el.innerHTML = '<span class="badge">' + CASE2.tag + '</span><h3>' + CASE2.title + '</h3><div class="cs-cols one"><div class="cs-col now" data-card><h4>Что делает бот</h4><ul>' + CASE2.does.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul></div></div><p class="cs-line" data-fade>' + CASE2.line + '</p>';
+  });
+  put('#estBox', function (el) {
+    el.innerHTML = '<div class="est-row est-hd"><span>Задача</span><span>Вручную</span><span>С автоматизацией</span></div>' + ESTIMATES.map(function (r) { return '<div class="est-row" data-card><b>' + r.task + '</b><span data-l="Вручную">' + r.before + '</span><span class="ok" data-l="С автоматизацией">' + r.after + '</span></div>'; }).join('');
+  });
 
   /* ---------- проекты и фильтр ---------- */
   var cur = 'Все', grid = $('#projGrid'), fbox = $('#filters');
+  if (grid && fbox) {
   fbox.insertAdjacentHTML('beforeend', FILTERS.map(function (f, i) { return '<button role="tab" aria-selected="' + (i ? 'false' : 'true') + '" class="' + (i ? '' : 'on') + '" data-f="' + f + '">' + f + '</button>'; }).join(''));
   function cardHtml(p, i) {
     return '<article class="proj" data-card data-tilt data-id="' + p.id + '" style="--i:' + i + '" tabindex="0" role="button" aria-label="Открыть проект ' + esc(p.title) + '" data-cursor="смотреть"><div class="proj-img"><img src="' + p.img + '" alt="Скриншот проекта ' + esc(p.title) + '" loading="lazy" data-par><span class="proj-badge">' + p.type + '</span></div>' +
@@ -49,6 +61,7 @@
   fbox.addEventListener('click', function (e) { var b = e.target.closest('[data-f]'); if (!b || b.dataset.f === cur) return; cur = b.dataset.f; $$('#filters button').forEach(function (x) { x.classList.toggle('on', x === b); x.setAttribute('aria-selected', String(x === b)); }); moveFilter(); draw(); });
   window.addEventListener('resize', moveFilter);
   draw(); setTimeout(moveFilter, 60); if (document.fonts && document.fonts.ready) document.fonts.ready.then(moveFilter);
+  }
 
   /* ---------- окна ---------- */
   var modal = $('#modal'), mBody = $('#mBody'), lastFocus = null;
@@ -70,10 +83,10 @@
     openModal('<div class="case"><div class="case-img"><img src="' + p.img + '" alt="' + esc(p.title) + '"></div><div class="case-tx"><span class="badge">' + p.type + ' · ' + p.year + '</span><h3>' + p.title + '</h3><p class="kind">' + p.kind + '</p><p>' + p.text + '</p><ul>' + p.points.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul><div class="tags">' + p.stack.map(function (t) { return '<span>' + t + '</span>'; }).join('') + '</div>' +
       '<div class="case-act"><a class="btn btn-o" href="' + p.demo + '" target="_blank" rel="noopener"><span>Открыть сайт</span>' + ARROW + '</a><a class="btn btn-ghost" href="' + p.code + '" target="_blank" rel="noopener"><span>Код на GitHub</span></a></div></div></div>', 'wide', origin);
   }
-  grid.addEventListener('click', function (e) { var c = e.target.closest('.proj[data-id]'); if (c) openProject(c.dataset.id, c); });
-  grid.addEventListener('keydown', function (e) { if ((e.key === 'Enter' || e.key === ' ') && e.target.matches('.proj[data-id]')) { e.preventDefault(); openProject(e.target.dataset.id, e.target); } });
+  if (grid) grid.addEventListener('click', function (e) { var c = e.target.closest('.proj[data-id]'); if (c) openProject(c.dataset.id, c); });
+  if (grid) grid.addEventListener('keydown', function (e) { if ((e.key === 'Enter' || e.key === ' ') && e.target.matches('.proj[data-id]')) { e.preventDefault(); openProject(e.target.dataset.id, e.target); } });
 
-  $('#aboutMore').addEventListener('click', function (e) {
+  var amEl = $('#aboutMore'); if (amEl) amEl.addEventListener('click', function (e) {
     e.preventDefault();
     openModal('<div class="more"><span class="badge">Обо мне</span><h3>Владислав Ким</h3><p class="lead">' + ABOUT_MORE.lead + '</p><div class="more-grid">' + ABOUT_MORE.groups.map(function (g) { return '<div><h4>' + g.title + '</h4><ul>' + g.items.map(function (i) { return '<li>' + i + '</li>'; }).join('') + '</ul></div>'; }).join('') + '</div><a class="btn btn-o" href="#contact" data-close><span>Обсудить проект</span>' + ARROW + '</a></div>', '', this);
   });
@@ -81,24 +94,35 @@
   /* ---------- toast, копирование почты ---------- */
   var tt; function toast(m) { var t = $('#toast'); t.textContent = m; void t.offsetWidth; t.classList.add('show'); clearTimeout(tt); tt = setTimeout(function () { t.classList.remove('show'); }, 2600); }
   window.toast = toast;
-  $('#mail').addEventListener('click', function (e) {
+  if (mailEl) mailEl.addEventListener('click', function (e) {
     if (e.metaKey || e.ctrlKey) return; e.preventDefault();
     var done = function () { toast('Почта скопирована: ' + ME.email); };
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(ME.email).then(done, function () { location.href = 'mailto:' + ME.email; }); else location.href = 'mailto:' + ME.email;
   });
 
-  /* ---------- форма ---------- */
+  /* ---------- анкета: 3 вопроса, отправка через Telegram (запасной вариант: почта) ---------- */
   var form = $('#form');
-  form.addEventListener('input', function (e) { e.target.classList.remove('bad'); var er = e.target.parentNode.querySelector('.err'); if (er) er.textContent = ''; });
-  form.addEventListener('submit', function (e) {
-    e.preventDefault(); var f = form.elements, bad = false;
-    function chk(n, c, m) { var x = f[n], er = x.parentNode.querySelector('.err'); x.classList.remove('bad'); er.textContent = ''; if (c) { x.classList.add('bad'); er.textContent = m; void x.offsetWidth; bad = true; } }
-    chk('name', f.name.value.trim().length < 2, 'Как к вам обращаться?'); chk('contact', f.contact.value.trim().length < 4, 'Оставьте почту или Telegram'); chk('msg', f.msg.value.trim().length < 10, 'Напишите пару слов о задаче');
-    if (bad) return;
-    var body = 'Здравствуйте, меня зовут ' + f.name.value.trim() + '.\n\n' + f.msg.value.trim() + '\n\nКонтакт для ответа: ' + f.contact.value.trim();
-    window.location.href = 'mailto:' + ME.email + '?subject=' + encodeURIComponent('Заказ с сайта: ' + f.name.value.trim()) + '&body=' + encodeURIComponent(body);
-    toast('Открываю почтовый клиент с готовым письмом'); form.reset();
-  });
+  if (form) {
+    var NL = String.fromCharCode(10);
+    var buildMsg = function (f) { return ['Здравствуйте! Заполнил(а) анкету на сайте.', '', '1. Что делается руками каждый день:', f.task.value.trim(), '', '2. Сколько времени в неделю это занимает:', f.time.value.trim(), '', '3. Как со мной связаться:', f.contact.value.trim()].join(NL); };
+    var valid = function () {
+      var f = form.elements, bad = false;
+      function chk(n, c, m) { var x = f[n], er = x.parentNode.querySelector('.err'); x.classList.remove('bad'); er.textContent = ''; if (c) { x.classList.add('bad'); er.textContent = m; void x.offsetWidth; bad = true; } }
+      chk('task', f.task.value.trim().length < 5, 'Напишите пару слов, что делается руками'); chk('time', f.time.value.trim().length < 1, 'Укажите примерное время'); chk('contact', f.contact.value.trim().length < 4, 'Оставьте Telegram, телефон или почту');
+      return !bad;
+    };
+    form.addEventListener('input', function (e) { e.target.classList.remove('bad'); var er = e.target.parentNode.querySelector('.err'); if (er) er.textContent = ''; });
+    form.addEventListener('submit', function (e) {
+      e.preventDefault(); if (!valid()) return;
+      window.open(ME.telegramUrl + '?text=' + encodeURIComponent(buildMsg(form.elements)), '_blank', 'noopener');
+      toast('Открываю Telegram с готовым сообщением. Останется нажать «Отправить»');
+    });
+    var alt = $('#altMail');
+    if (alt) alt.addEventListener('click', function (e) {
+      e.preventDefault(); if (!valid()) return;
+      window.location.href = 'mailto:' + ME.email + '?subject=' + encodeURIComponent('Анкета с сайта') + '&body=' + encodeURIComponent(buildMsg(form.elements));
+    });
+  }
 
   /* ---------- меню на телефоне ---------- */
   var burger = $('#burger'), nav = $('#nav');
