@@ -104,6 +104,7 @@ p { color: var(--muted); }
 .ph-card { position: relative; aspect-ratio: 454 / 560; border-radius: 28px 48px 28px 28px; overflow: hidden; background: radial-gradient(120% 90% at 30% 20%, #3a3f42, #1d2022 60%, #141516); box-shadow: 0 40px 90px rgba(0, 0, 0, .5); }
 .ph-in { position: absolute; inset: 0; display: grid; place-items: center; align-content: center; gap: 12px; }
 .ph-mono { font-family: var(--head); font-weight: 700; font-size: clamp(80px, 11vw, 150px); line-height: 1; letter-spacing: -.04em; background: linear-gradient(135deg, #fff, #8a8f93); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.ph-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; display: block; }
 .ph-hint { font-size: 12px; letter-spacing: .24em; text-transform: uppercase; color: #6b7073; }
 .out { position: absolute; border: 1px solid var(--orange); pointer-events: none; }
 .out-a { right: 0; top: -16px; width: 110px; height: 34px; border-radius: 999px; }
