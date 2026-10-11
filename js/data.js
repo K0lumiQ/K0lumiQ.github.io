@@ -93,10 +93,14 @@
     { id: 'classy', title: 'Classy Store', type: 'Магазины', kind: 'Интернет-магазин одежды', img: 'assets/img/proj-classy.jpg', stack: ['HTML', 'CSS', 'JS'], year: '2026',
       text: 'Многостраничный магазин одежды: каталог, карточка товара, корзина, чекаут, блог.',
       points: ['Каталог, карточка товара', 'Корзина и чекаут', 'Блог, о нас, контакты', 'Слайдеры и анимации'],
-      demo: 'https://k0lumiq.github.io/classy-store/', code: 'https://github.com/K0lumiQ/classy-store' }
+      demo: 'https://k0lumiq.github.io/classy-store/', code: 'https://github.com/K0lumiQ/classy-store' },
+    { id: 'lens', title: 'Lens agency', type: 'Агентства', kind: 'Сайт B2B-маркетингового агентства', img: 'assets/img/proj-lens.jpg', stack: ['HTML', 'CSS', 'JS'], year: '2026',
+      text: 'Сайт агентства по макету pixel-to-pixel: главная, о компании, контакты, кейсы, блог. Адаптив на три ширины (1440, 768, 390), формы с проверкой, анимации.',
+      points: ['Три ширины макета: десктоп, планшет, мобильный', 'Формы: маска телефона и проверка полей', 'FAQ-аккордеон и мобильное меню', 'Кейсы, блог, политика конфиденциальности'],
+      demo: 'https://k0lumiq.github.io/lens-agency/', code: 'https://github.com/K0lumiQ/lens-agency' }
   ];
 
-  window.FILTERS = ['Все', 'Магазины', 'Рестораны', 'Приложения'];
+  window.FILTERS = ['Все', 'Магазины', 'Рестораны', 'Приложения', 'Агентства'];
 
   window.ABOUT_MORE = {
     lead: 'Помогаю бизнесу убрать ручную рутину: боты, сбор данных, отчёты, панели для руководителя. Сначала разбираюсь в вашем процессе и только потом предлагаю решение. Могу честно сказать, что автоматизировать не стоит.',
