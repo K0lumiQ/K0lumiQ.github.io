@@ -5,23 +5,20 @@
 
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var SENDERS = [
-    { n: 'Анна · диспетчер', i: 'А', k: 's1' },
-    { n: 'Капитан Сергеев', i: 'С', k: 's2' },
-    { n: 'Игорь · менеджер', i: 'И', k: 's3' }
+    { n: 'Анна · диспетчер', i: 'А', k: 's1' }
   ];
   // parts: строка или [текст, вид]; вид: b баржа, c груз, w вес, d дата
   var ORDERS = [
     { who: 0, time: '09:12', date: '16 окт', route: 'Заря-14', cargo: 'Арматура', w: '20 т', ok: true,
-      parts: ['Баржа «', ['Заря-14', 'b'], '» под погрузку, ', ['арматура', 'c'], ' ', ['20 т', 'w'], ', ', ['завтра к 9', 'd']] },
-    { who: 1, time: '09:40', date: '18 окт', route: 'Каскад', cargo: 'Паллеты', w: '8 т', ok: true,
-      parts: ['Добрый день, «', ['Каскад', 'b'], '» свободна, ', ['паллеты', 'c'], ' ', ['8 тонн', 'w'], ', ', ['в пятницу', 'd']] },
-    { who: 2, time: '10:05', date: '21 окт', route: 'Лазурная', cargo: 'Цемент', w: '12 т', ok: false,
-      reply: { n: 'Капитан Сергеев', k: 's2', t: '«Каскад» свободна, паллеты 8 тонн' },
-      parts: ['Эту не трогаем. Нужна «', ['Лазурная', 'b'], '» ', ['на понедельник', 'd'], ', ', ['цемент', 'c'], ' ', ['12 т', 'w']] },
-    { who: 1, time: '10:31', date: '23 окт', route: 'Север-7', cargo: 'Песок', w: '5 т', ok: true,
-      parts: ['Бигбэги с ', ['песком', 'c'], ', ', ['5 т', 'w'], ', баржа «', ['Север-7', 'b'], '», ', ['в среду', 'd']] },
+      parts: [['16 октября', 'd'], ' планируется приход баржи ', ['«Заря-14»', 'b'], ', груз ', ['арматура', 'c'], ', вес ', ['20 т', 'w']] },
+    { who: 0, time: '09:40', date: '18 окт', route: 'Каскад', cargo: 'Паллеты', w: '8 т', ok: true,
+      parts: [['18 октября', 'd'], ' планируется приход баржи ', ['«Каскад»', 'b'], ', груз ', ['паллеты', 'c'], ', вес ', ['8 т', 'w']] },
+    { who: 0, time: '10:05', date: '21 окт', route: 'Лазурная', cargo: 'Цемент', w: '12 т', ok: false,
+      parts: [['21 октября', 'd'], ' планируется приход баржи ', ['«Лазурная»', 'b'], ', груз ', ['цемент', 'c'], ', вес ', ['12 т', 'w']] },
+    { who: 0, time: '10:31', date: '23 окт', route: 'Север-7', cargo: 'Песок', w: '5 т', ok: true,
+      parts: [['23 октября', 'd'], ' планируется приход баржи ', ['«Север-7»', 'b'], ', груз ', ['песок', 'c'], ', вес ', ['5 т', 'w']] },
     { who: 0, time: '11:02', date: '24 окт', route: 'Береговая-3', cargo: 'Металлопрокат', w: '22 т', ok: false,
-      parts: ['Заявка: ', ['металлопрокат', 'c'], ' ', ['22 т', 'w'], ', «', ['Береговая-3', 'b'], '», ', ['на четверг', 'd']] }
+      parts: [['24 октября', 'd'], ' планируется приход баржи ', ['«Береговая-3»', 'b'], ', груз ', ['металлопрокат', 'c'], ', вес ', ['22 т', 'w']] }
   ];
   var HL_ORDER = ['b', 'c', 'w', 'd'];
   var COLS = [['c-date', 'Дата'], ['c-route', 'Баржа'], ['c-cargo', 'Груз'], ['c-w', 'Вес'], ['c-st', 'Статус']];
@@ -46,7 +43,6 @@
     var row = el('div', 'dm-msg');
     row.appendChild(avatar(s.k, s.i));
     var bub = el('div', 'dm-bub');
-    bub.appendChild(el('div', 'dm-name ' + s.k, s.n));
     if (o.reply) {
       var q = el('div', 'dm-reply ' + o.reply.k);
       q.appendChild(el('b', null, o.reply.n)); q.appendChild(el('span', null, o.reply.t));
@@ -69,8 +65,8 @@
   function build() {
     chat.textContent = ''; table.textContent = ''; slots = [];
     var hd = el('div', 'dm-hd');
-    hd.appendChild(avatar('grp', 'ЗБ'));
-    var tt = el('div', 'dm-tt'); tt.appendChild(el('b', null, 'Заявки · Баржи')); tt.appendChild(el('span', null, '5 участников, онлайн'));
+    hd.appendChild(avatar('grp', 'А'));
+    var tt = el('div', 'dm-tt'); tt.appendChild(el('b', null, 'Анна · диспетчер')); tt.appendChild(el('span', null, 'онлайн'));
     hd.appendChild(tt); chat.appendChild(hd);
     msgs = el('div', 'dm-msgs'); chat.appendChild(msgs);
     var cp = el('div', 'dm-compose'); cp.appendChild(el('span', 'dm-inp', 'Сообщение'));
