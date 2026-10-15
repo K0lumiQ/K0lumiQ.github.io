@@ -5,13 +5,13 @@
 
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var ORDERS = [
-    { text: 'Нужна машина 20 т, арматура, Ростов → Краснодар, завтра к 9', time: '09:12', date: '16 окт', route: 'Ростов → Краснодар', cargo: 'Арматура', w: '20 т', ok: true },
-    { text: 'Добрый день, есть паллеты, 8 тонн, Москва → Тула, в пятницу', time: '09:40', date: '18 окт', route: 'Москва → Тула', cargo: 'Паллеты', w: '8 т', ok: true },
-    { text: 'Привезите цемент 12 т из Воронежа в Липецк на понедельник', time: '10:05', date: '21 окт', route: 'Воронеж → Липецк', cargo: 'Цемент', w: '12 т', ok: false },
-    { text: 'Нужен бигбэг с песком, 5 т, Самара → Саратов, в среду', time: '10:31', date: '23 окт', route: 'Самара → Саратов', cargo: 'Песок', w: '5 т', ok: true },
-    { text: 'Заявка: металлопрокат 22 т, Тверь → Ярославль, на четверг', time: '11:02', date: '24 окт', route: 'Тверь → Ярославль', cargo: 'Металлопрокат', w: '22 т', ok: false }
+    { text: 'Баржа «Заря-14» под погрузку, арматура 20 т, завтра к 9', time: '09:12', date: '16 окт', route: 'Заря-14', cargo: 'Арматура', w: '20 т', ok: true },
+    { text: 'Добрый день, «Каскад» свободна, паллеты 8 тонн, в пятницу', time: '09:40', date: '18 окт', route: 'Каскад', cargo: 'Паллеты', w: '8 т', ok: true },
+    { text: 'Нужна «Лазурная» на понедельник, цемент 12 т', time: '10:05', date: '21 окт', route: 'Лазурная', cargo: 'Цемент', w: '12 т', ok: false },
+    { text: 'Бигбэги с песком, 5 т, баржа «Север-7», в среду', time: '10:31', date: '23 окт', route: 'Север-7', cargo: 'Песок', w: '5 т', ok: true },
+    { text: 'Заявка: металлопрокат 22 т, «Береговая-3», на четверг', time: '11:02', date: '24 окт', route: 'Береговая-3', cargo: 'Металлопрокат', w: '22 т', ok: false }
   ];
-  var COLS = [['c-date', 'Дата'], ['c-route', 'Маршрут'], ['c-cargo', 'Груз'], ['c-w', 'Вес'], ['c-st', 'Статус']];
+  var COLS = [['c-date', 'Дата'], ['c-route', 'Баржа'], ['c-cargo', 'Груз'], ['c-w', 'Вес'], ['c-st', 'Статус']];
 
   function el(tag, cls, txt) { var n = document.createElement(tag); if (cls) n.className = cls; if (txt != null) n.textContent = txt; return n; }
   function wait(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }

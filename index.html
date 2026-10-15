@@ -12,7 +12,8 @@
   <script>document.documentElement.classList.add('js')</script>
   <link rel="stylesheet" href="css/styles.css?v=20261012a">
   <link rel="stylesheet" href="css/motion.css?v=20261012a">
-  <link rel="stylesheet" href="css/demo.css?v=20261015a">
+  <link rel="stylesheet" href="css/demo.css?v=20261015b">
+  <link rel="stylesheet" href="css/analytics.css?v=20261015c">
   <noscript><style>.loader,.progress,.cursor{display:none!important}body.is-loading{overflow:auto!important}.hdr{transform:none!important}</style></noscript>
 </head>
 <body class="is-loading">
@@ -57,8 +58,9 @@
           <div class="dm-chat" id="dmChat" aria-label="Чат с заявками"></div>
           <div class="dm-table" id="dmTable" aria-label="Таблица заявок"></div>
         </div>
+        <div class="an" id="anBox" aria-label="Аналитика по заявкам"></div>
         <p class="demo-note" data-fade>Иллюстрация, данные условные.</p>
-        <noscript><p>Заявки из чата сами попадают в таблицу: дата, маршрут, груз, вес, статус.</p></noscript>
+        <noscript><p>Заявки из чата сами попадают в таблицу: дата, баржа, груз, вес, статус, а по ним строится аналитика.</p></noscript>
       </div>
     </section>
 
@@ -150,6 +152,7 @@
   <script src="js/data.js?v=20261012a"></script>
   <script src="js/app.js?v=20261012a"></script>
   <script src="js/fx.js?v=20261012a"></script>
-  <script src="js/demo.js?v=20261015a"></script>
+  <script src="js/demo.js?v=20261015b"></script>
+  <script src="js/analytics.js?v=20261015c"></script>
 </body>
 </html>
