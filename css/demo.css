@@ -1,0 +1,58 @@
+/* Демо: заявки из чата сами попадают в таблицу */
+.demo-stage { position: relative; display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.25fr); gap: 20px; align-items: stretch; }
+.dm-chat, .dm-table { border-radius: 28px; background: linear-gradient(160deg, var(--bg-2), #1d2022); border: 1px solid var(--line); padding: 18px; min-width: 0; }
+.dm-chat { display: flex; flex-direction: column; gap: 10px; height: 440px; overflow: hidden; position: relative; }
+.dm-hd { display: flex; align-items: center; gap: 10px; padding: 2px 4px 12px; border-bottom: 1px solid var(--line); margin-bottom: 4px; font-family: var(--head); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.dm-hd i { width: 8px; height: 8px; border-radius: 50%; background: var(--orange); box-shadow: 0 0 0 4px rgba(255, 145, 67, .18); }
+.dm-msgs { flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: flex-end; gap: 10px; overflow: hidden; padding: 0 2px 2px; -webkit-mask-image: linear-gradient(to bottom, transparent, #000 28px); mask-image: linear-gradient(to bottom, transparent, #000 28px); }
+.dm-msg { align-self: flex-start; max-width: 92%; padding: 10px 14px; border-radius: 16px 16px 16px 4px; background: rgba(0, 0, 0, .28); border: 1px solid var(--line); font-family: var(--body); font-size: 15px; line-height: 1.45; color: #e6e6e6; opacity: 0; transform: translateY(14px) scale(.96); transition: opacity .45s var(--e), transform .45s var(--e), border-color .4s; }
+.dm-msg.in { opacity: 1; transform: none; }
+.dm-msg.sent { border-color: rgba(255, 145, 67, .5); }
+.dm-msg small { display: block; margin-top: 4px; font-size: 11px; color: var(--muted); }
+.dm-typing { align-self: flex-start; display: flex; gap: 4px; padding: 10px 14px; border-radius: 16px 16px 16px 4px; background: rgba(0, 0, 0, .28); border: 1px solid var(--line); opacity: 0; transition: opacity .25s; }
+.dm-typing.on { opacity: 1; }
+.dm-typing i { width: 6px; height: 6px; border-radius: 50%; background: var(--muted); animation: dmDot 1s infinite ease-in-out; }
+.dm-typing i:nth-child(2) { animation-delay: .15s; }
+.dm-typing i:nth-child(3) { animation-delay: .3s; }
+@keyframes dmDot { 0%, 100% { opacity: .3; transform: translateY(0); } 50% { opacity: 1; transform: translateY(-3px); } }
+
+.dm-table { display: flex; flex-direction: column; gap: 8px; height: 440px; }
+.dm-row { display: grid; grid-template-columns: 74px minmax(0, 1.5fr) minmax(0, 1fr) 62px 104px; gap: 10px; align-items: center; padding: 0 14px; min-height: 58px; border-radius: 14px; font-size: 14px; line-height: 1.3; color: #e6e6e6; }
+.dm-row.head { min-height: 34px; font-family: var(--head); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--line); border-radius: 0; margin-bottom: 2px; }
+.dm-row.slot { border: 1px dashed var(--line); background: rgba(0, 0, 0, .12); transition: border-color .4s, background .4s; }
+.dm-row.slot > * { opacity: 0; }
+.dm-row.slot.on { border: 1px solid var(--line); background: rgba(0, 0, 0, .2); }
+.dm-row.slot.on > * { opacity: 1; transition: opacity .4s var(--e); }
+.dm-row.slot.flash { border-color: rgba(255, 145, 67, .6); background: rgba(255, 145, 67, .08); }
+.dm-row span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dm-st { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; color: var(--muted); }
+.dm-st::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: #5c6063; flex: none; }
+.dm-st.ok { color: var(--orange); }
+.dm-st.ok::before { background: var(--orange); }
+
+/* чип, который «перелетает» из сообщения в таблицу */
+.dm-chip { position: absolute; left: 0; top: 0; z-index: 3; padding: 8px 14px; border-radius: 999px; background: var(--orange); color: #1a1a1a; font-size: 13px; font-weight: 500; white-space: nowrap; pointer-events: none; will-change: transform, opacity; }
+
+.demo-note { margin-top: 16px; font-size: 13px; color: var(--muted); text-align: right; }
+
+@media (max-width: 960px) {
+  .demo-stage { grid-template-columns: 1fr; }
+  .dm-chat { height: 380px; }
+  .dm-table { height: auto; }
+}
+@media (max-width: 600px) {
+  .dm-chat, .dm-table { padding: 14px; border-radius: 22px; }
+  .dm-chat { height: 360px; }
+  .dm-msg { font-size: 14px; }
+  .dm-row { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: 'route st' 'meta meta'; row-gap: 3px; padding: 10px 14px; min-height: 62px; }
+  .dm-row.head { display: none; }
+  .dm-row .c-date { grid-area: meta; font-size: 12px; color: var(--muted); }
+  .dm-row .c-route { grid-area: route; font-weight: 500; }
+  .dm-row .c-cargo, .dm-row .c-w { display: none; }
+  .dm-row .c-st { grid-area: st; }
+  .demo-note { text-align: left; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dm-msg { transition: none; opacity: 1; transform: none; }
+  .dm-typing i { animation: none; }
+}

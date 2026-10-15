@@ -12,6 +12,7 @@
   <script>document.documentElement.classList.add('js')</script>
   <link rel="stylesheet" href="css/styles.css?v=20261012a">
   <link rel="stylesheet" href="css/motion.css?v=20261012a">
+  <link rel="stylesheet" href="css/demo.css?v=20261015a">
   <noscript><style>.loader,.progress,.cursor{display:none!important}body.is-loading{overflow:auto!important}.hdr{transform:none!important}</style></noscript>
 </head>
 <body class="is-loading">
@@ -48,6 +49,18 @@
     </section>
 
     <div class="marquee" id="marquee" aria-hidden="true"><div class="mq-track" id="mqTrack"><div class="mq-set"><span>Боты</span><span>Заявки</span><span>Отчёты</span><span>Панели</span><span>Сбор данных</span><span>Интеграции</span><span>Автоматизация</span></div><div class="mq-set"><span>Боты</span><span>Заявки</span><span>Отчёты</span><span>Панели</span><span>Сбор данных</span><span>Интеграции</span><span>Автоматизация</span></div></div></div>
+
+    <section class="demo sec" id="demo">
+      <div class="wrap">
+        <div class="sec-hd"><h2 class="h2" data-split>Раньше вручную, теперь само</h2><p class="sec-p" data-fade>Заявки приходят в чат как обычные сообщения. Дальше они сами раскладываются по таблице, переписывать ничего не нужно.</p></div>
+        <div class="demo-stage" id="demoStage">
+          <div class="dm-chat" id="dmChat" aria-label="Чат с заявками"></div>
+          <div class="dm-table" id="dmTable" aria-label="Таблица заявок"></div>
+        </div>
+        <p class="demo-note" data-fade>Иллюстрация, данные условные.</p>
+        <noscript><p>Заявки из чата сами попадают в таблицу: дата, маршрут, груз, вес, статус.</p></noscript>
+      </div>
+    </section>
 
     <section class="about sec" id="about">
       <div class="glow g2"></div>
@@ -137,5 +150,6 @@
   <script src="js/data.js?v=20261012a"></script>
   <script src="js/app.js?v=20261012a"></script>
   <script src="js/fx.js?v=20261012a"></script>
+  <script src="js/demo.js?v=20261015a"></script>
 </body>
 </html>
